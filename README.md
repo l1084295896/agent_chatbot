@@ -29,7 +29,7 @@
 ├── chroma_db/            # Chroma 向量库持久化目录
 ├── config/               # 配置文件
 ├── data/                 # 数据目录
-│   └── external/         # 外部知识库文件
+│   └── external/         # 用户使用记录（CSV）
 ├── logs/                 # 日志目录
 ├── model/                # 模型工厂
 ├── prompts/              # 提示词模板
@@ -75,7 +75,7 @@ streamlit run app.py
 
 当需要更新知识库内容时：
 
-1. 将新的 TXT/PDF 文档放入 `data/external/` 目录
+1. 将新的 TXT/PDF 文档放入 `data/` 目录（**不是 data/external/**）
 2. 重新运行初始化脚本：
 
 ```bash
@@ -117,11 +117,12 @@ docker-compose down
 
 ## 知识库数据
 
-将扫地机器人相关的知识文档放入 `data/external/` 目录，支持格式：
+将扫地机器人相关的知识文档放入 `data/` 目录（**不是 data/external/**），支持格式：
 
 - TXT 文本文件
-- CSV 表格文件
 - PDF 文档
+
+> 注意：`data/external/` 目录用于存放用户使用记录（CSV），不是知识库文档目录。
 
 ## License
 

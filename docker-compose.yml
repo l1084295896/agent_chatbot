@@ -12,5 +12,5 @@ services:
     volumes:
       - ./chroma_db:/app/chroma_db
       - ./logs:/app/logs
-      - ./data/external:/app/data/external
+      - ./data:/app/data
     restart: unless-stopped
