@@ -1,8 +1,9 @@
+import time
+
 import streamlit as st
 from agent.react_agent import ReactAgent
 
-# streamlit run app.py
-
+# 标题
 st.title("智扫通机器人智能客服")
 st.divider()
 
@@ -14,21 +15,28 @@ if "messages" not in st.session_state:
 for message in st.session_state["messages"]:
     st.chat_message(message["role"]).write(message["content"])
 
+# 用户输入提示词
 prompt = st.chat_input()
 
 if prompt:
     st.chat_message("user").write(prompt)
     st.session_state["messages"].append({"role": "user", "content": prompt})
 
-    response_placeholder = st.chat_message("assistant").write("")
-
+    response_messages = []
     with st.spinner("智能客服思考中..."):
         res_stream = st.session_state["agent"].execute_stream(prompt)
 
-        full_response = ""
-        for delta in res_stream:
-            full_response += delta
-            response_placeholder.write(full_response)
+        def capture(generator, cache_list):
+            for chunk in generator:
+                cache_list.append(chunk)
+                for char in chunk:
+                    time.sleep(0.01)
+                    yield char
 
-    st.session_state["messages"].append({"role": "assistant", "content": full_response})
-    st.rerun()
+        st.chat_message("assistant").write_stream(
+            capture(res_stream, response_messages)
+        )
+        st.session_state["messages"].append(
+            {"role": "assistant", "content": response_messages[-1]}
+        )
+        st.rerun()
