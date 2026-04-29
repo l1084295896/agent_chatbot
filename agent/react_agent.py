@@ -34,7 +34,7 @@ class ReactAgent:
         input_dict = {"messages": [{"role": "user",'content':query},]}
 
         #第三个参数context 就是hi做提示词切换时的标记
-        last_content = ""
+        last_content = query
         for chunk in self.agent.stream(input_dict,stream_mode="values",context={"report":False}):
             latest_mes=chunk["messages"][-1]
             if latest_mes.content:
