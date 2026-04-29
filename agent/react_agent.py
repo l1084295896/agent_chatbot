@@ -32,12 +32,23 @@ class ReactAgent:
 
     def execute_stream(self,query:str):
         input_dict = {"messages": [{"role": "user",'content':query},]}
-        
+
         #第三个参数context 就是hi做提示词切换时的标记
+        last_content = ""
         for chunk in self.agent.stream(input_dict,stream_mode="values",context={"report":False}):
             latest_mes=chunk["messages"][-1]
             if latest_mes.content:
-                yield latest_mes.content.strip() + "\n"
+                new_content = latest_mes.content.strip()
+                # 只返回增量部分，避免重复累积内容导致流式输出闪烁
+                if new_content.startswith(last_content):
+                    delta = new_content[len(last_content):]
+                    last_content = new_content
+                    if delta:
+                        yield delta + "\n"
+                else:
+                    # 内容完全改变（非累积），直接返回
+                    last_content = new_content
+                    yield new_content + "\n"
 
 
 if __name__ == "__main__":
