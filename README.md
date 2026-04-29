@@ -43,13 +43,22 @@
 
 ## 快速开始
 
-### 1. 安装依赖
+### 1. 创建虚拟环境（推荐）
+
+```bash
+python -m venv venv
+source venv/bin/activate  # Linux/Mac
+# 或
+venv\Scripts\activate     # Windows
+```
+
+### 2. 安装依赖
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 2. 配置环境变量
+### 3. 配置环境变量
 
 确保已设置 DashScope API Key：
 
