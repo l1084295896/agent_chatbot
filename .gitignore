@@ -45,6 +45,9 @@ data/external/*.txt
 md5.txt
 *.sqlite3
 
+# Claude Code
+.claude/
+
 # OS
 .DS_Store
 Thumbs.db
