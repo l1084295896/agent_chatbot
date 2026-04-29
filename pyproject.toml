@@ -1,0 +1,7 @@
+[project]
+name = "agent-rag"
+version = "0.1.0"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["utils*", "model*", "rag*", "agent*"]

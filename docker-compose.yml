@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  agent-rag:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8501:8501"
+    environment:
+      - DASHSCOPE_API_KEY=${DASHSCOPE_API_KEY}
+    volumes:
+      - ./chroma_db:/app/chroma_db
+      - ./logs:/app/logs
+      - ./data/external:/app/data/external
+    restart: unless-stopped
